@@ -1,0 +1,6 @@
+{
+    "watch":["."],
+    "ext":".go",
+    "ignore":[],
+    "exec":"fuser -k 8080/tcp ; go run main.go"
+}

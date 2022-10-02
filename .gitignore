@@ -2,3 +2,4 @@
 go.sum
 app.env
 *.jpg
+__debug_bin

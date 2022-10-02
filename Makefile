@@ -16,4 +16,7 @@ migratedown:
 server:
 	go run main.go
 
-.PHONY: postgres createdb dropdb migrateup migratedown server
+dev:
+	nodemon
+
+.PHONY: postgres createdb dropdb migrateup migratedown server dev
