@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"github.com/Xebec19/shiny-parakeet/auth"
-	"github.com/Xebec19/shiny-parakeet/db"
 	"github.com/Xebec19/shiny-parakeet/util"
 	"github.com/gin-gonic/gin"
 )
@@ -16,7 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatal("cannot load config:", err)
 	}
-	db.Connect()
+	// db.Connect()
 
 	// routes
 	auth.Routes(r)
