@@ -1,0 +1,4 @@
+*.png
+go.sum
+app.env
+*.jpg
