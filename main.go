@@ -15,7 +15,9 @@ func main() {
 	if err != nil {
 		log.Fatal("cannot load config:", err)
 	}
-	// db.Connect()
+
+	// Connect database
+	util.Connect()
 
 	// routes
 	auth.Routes(r)

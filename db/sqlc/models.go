@@ -61,7 +61,7 @@ type Account struct {
 	Address     sql.NullString `json:"address"`
 	Description sql.NullString `json:"description"`
 	CreatedAt   sql.NullTime   `json:"created_at"`
-	CreatedBy   uuid.NullUUID  `json:"created_by"`
+	CreatedBy   uuid.UUID      `json:"created_by"`
 }
 
 type Relation struct {

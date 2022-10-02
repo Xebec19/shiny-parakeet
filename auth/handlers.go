@@ -1,9 +1,10 @@
 package auth
 
 import (
+	"database/sql"
 	"net/http"
 
-	db "github.com/Xebec19/shiny-parakeet/db"
+	db "github.com/Xebec19/shiny-parakeet/db/sqlc"
 	"github.com/Xebec19/shiny-parakeet/util"
 	"github.com/gin-gonic/gin"
 )
@@ -14,8 +15,20 @@ func register(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
 	}
-	user := db.Users{FirstName: req.FirstName, LastName: req.LastName, Email: req.Email, Password: req.Password}
-	db.DB.Create(&user)
-	payload := util.ResponseParams{Status: true, Data: user}
+	args := db.CreateUserParams{
+		FirstName: req.FirstName,
+		LastName:  sql.NullString{String: req.LastName, Valid: true},
+		Email:     req.Email,
+		Password:  req.Password,
+	}
+	user, err := util.DBQuery.CreateUser(c, args)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+	payload := util.ResponseParams{
+		Status: true,
+		Data:   user,
+	}
 	c.JSON(http.StatusAccepted, util.Response(payload))
 }

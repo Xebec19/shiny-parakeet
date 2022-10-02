@@ -19,4 +19,7 @@ server:
 dev:
 	nodemon
 
-.PHONY: postgres createdb dropdb migrateup migratedown server dev
+sqlc:
+	sqlc generate
+
+.PHONY: postgres createdb dropdb migrateup migratedown server dev sqlc
