@@ -13,4 +13,11 @@ func createAccount(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
 	}
+	// args := db.CreateAccountParams{
+	// 	AccountName: req.AccountName,
+	// 	Dob:         time.Time(req.DOB),
+	// 	Address:     sql.NullString{req.Address,true},
+	// 	Description: sql.NullString{req.Description,true},
+	// 	CreatedBy: ,
+	// }
 }

@@ -59,6 +59,7 @@ type Account struct {
 	AccountName string         `json:"account_name"`
 	Dob         time.Time      `json:"dob"`
 	Address     sql.NullString `json:"address"`
+	Status      sql.NullString `json:"status"`
 	Description sql.NullString `json:"description"`
 	CreatedAt   sql.NullTime   `json:"created_at"`
 	CreatedBy   uuid.UUID      `json:"created_by"`

@@ -37,3 +37,127 @@ func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (u
 	err := row.Scan(&account_id)
 	return account_id, err
 }
+
+const deleteAccount = `-- name: DeleteAccount :exec
+UPDATE ACCOUNTS SET STATUS = 'unactive' WHERE ACCOUNT_ID = $1 AND CREATED_BY = $2
+`
+
+type DeleteAccountParams struct {
+	AccountID uuid.UUID `json:"account_id"`
+	CreatedBy uuid.UUID `json:"created_by"`
+}
+
+func (q *Queries) DeleteAccount(ctx context.Context, arg DeleteAccountParams) error {
+	_, err := q.db.ExecContext(ctx, deleteAccount, arg.AccountID, arg.CreatedBy)
+	return err
+}
+
+const readAccount = `-- name: ReadAccount :one
+SELECT ACCOUNT_ID, ACCOUNT_NAME, DOB, ADDRESS, DESCRIPTION, CREATED_AT FROM ACCOUNTS 
+WHERE ACCOUNT_ID = $1 AND CREATED_BY = $2 AND STATUS = 'active'
+`
+
+type ReadAccountParams struct {
+	AccountID uuid.UUID `json:"account_id"`
+	CreatedBy uuid.UUID `json:"created_by"`
+}
+
+type ReadAccountRow struct {
+	AccountID   uuid.UUID      `json:"account_id"`
+	AccountName string         `json:"account_name"`
+	Dob         time.Time      `json:"dob"`
+	Address     sql.NullString `json:"address"`
+	Description sql.NullString `json:"description"`
+	CreatedAt   sql.NullTime   `json:"created_at"`
+}
+
+func (q *Queries) ReadAccount(ctx context.Context, arg ReadAccountParams) (ReadAccountRow, error) {
+	row := q.db.QueryRowContext(ctx, readAccount, arg.AccountID, arg.CreatedBy)
+	var i ReadAccountRow
+	err := row.Scan(
+		&i.AccountID,
+		&i.AccountName,
+		&i.Dob,
+		&i.Address,
+		&i.Description,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
+const readAllAccount = `-- name: ReadAllAccount :many
+SELECT ACCOUNT_ID, ACCOUNT_NAME, DOB, ADDRESS, DESCRIPTION, CREATED_AT FROM ACCOUNTS 
+WHERE CREATED_BY = $1 OFFSET $2 LIMIT $3
+`
+
+type ReadAllAccountParams struct {
+	CreatedBy uuid.UUID `json:"created_by"`
+	Offset    int32     `json:"offset"`
+	Limit     int32     `json:"limit"`
+}
+
+type ReadAllAccountRow struct {
+	AccountID   uuid.UUID      `json:"account_id"`
+	AccountName string         `json:"account_name"`
+	Dob         time.Time      `json:"dob"`
+	Address     sql.NullString `json:"address"`
+	Description sql.NullString `json:"description"`
+	CreatedAt   sql.NullTime   `json:"created_at"`
+}
+
+func (q *Queries) ReadAllAccount(ctx context.Context, arg ReadAllAccountParams) ([]ReadAllAccountRow, error) {
+	rows, err := q.db.QueryContext(ctx, readAllAccount, arg.CreatedBy, arg.Offset, arg.Limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ReadAllAccountRow
+	for rows.Next() {
+		var i ReadAllAccountRow
+		if err := rows.Scan(
+			&i.AccountID,
+			&i.AccountName,
+			&i.Dob,
+			&i.Address,
+			&i.Description,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const updateAccount = `-- name: UpdateAccount :one
+UPDATE ACCOUNTS SET ACCOUNT_NAME = $1, DOB = $2, ADDRESS = $3, DESCRIPTION = $4 WHERE ACCOUNT_ID = $5 AND CREATED_BY = $6 RETURNING ACCOUNT_ID
+`
+
+type UpdateAccountParams struct {
+	AccountName string         `json:"account_name"`
+	Dob         time.Time      `json:"dob"`
+	Address     sql.NullString `json:"address"`
+	Description sql.NullString `json:"description"`
+	AccountID   uuid.UUID      `json:"account_id"`
+	CreatedBy   uuid.UUID      `json:"created_by"`
+}
+
+func (q *Queries) UpdateAccount(ctx context.Context, arg UpdateAccountParams) (uuid.UUID, error) {
+	row := q.db.QueryRowContext(ctx, updateAccount,
+		arg.AccountName,
+		arg.Dob,
+		arg.Address,
+		arg.Description,
+		arg.AccountID,
+		arg.CreatedBy,
+	)
+	var account_id uuid.UUID
+	err := row.Scan(&account_id)
+	return account_id, err
+}

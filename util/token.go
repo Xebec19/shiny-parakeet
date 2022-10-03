@@ -34,3 +34,31 @@ func GenerateJWT(userId string, email string) (string, error) {
 	tokenString, err := token.SignedString([]byte(config.JWTSecret))
 	return "Bearer " + tokenString, err
 }
+
+// ValidateToken takes a token and returns error if token is not valid
+// func ValidateToken(signedToken string) (err error) {
+// 	config, err := LoadConfig(".")
+// 	if err != nil {
+// 		log.Fatal("cannot load config:", err)
+// 	}
+// 	token, err := jwt.ParseWithClaims(
+// 		signedToken,
+// 		&JWTClaim{},
+// 		func(token *jwt.Token) (interface{}, error) {
+// 			return []byte(config.JWTSecret)
+// 		},
+// 	)
+// 	if err != nil {
+// 		return
+// 	}
+// 	claims, ok := token.Claims.(*JWTClaim)
+// 	if !ok {
+// 		err = error.New("couldn't parse claims")
+// 		return
+// 	}
+// 	if claims.ExpiresAt < time.Now().Local().Unix() {
+// 		err = error.New("token expired")
+// 		return
+// 	}
+// 	return
+// }
