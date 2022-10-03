@@ -8,6 +8,8 @@ package db
 import (
 	"context"
 	"database/sql"
+
+	"github.com/google/uuid"
 )
 
 const createUser = `-- name: CreateUser :one
@@ -38,5 +40,22 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
+	return i, err
+}
+
+const findUser = `-- name: FindUser :one
+SELECT USER_ID, EMAIL, PASSWORD FROM USERS WHERE LOWER(EMAIL) = LOWER($1) LIMIT 1
+`
+
+type FindUserRow struct {
+	UserID   uuid.UUID `json:"user_id"`
+	Email    string    `json:"email"`
+	Password string    `json:"password"`
+}
+
+func (q *Queries) FindUser(ctx context.Context, lower string) (FindUserRow, error) {
+	row := q.db.QueryRowContext(ctx, findUser, lower)
+	var i FindUserRow
+	err := row.Scan(&i.UserID, &i.Email, &i.Password)
 	return i, err
 }

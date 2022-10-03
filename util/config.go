@@ -5,11 +5,13 @@ import (
 )
 
 type Config struct {
-	Port     string `mapstructure:"SERVER_PORT"`
-	DBSource string `mapstructure:"DB_SOURCE"`
-	DBDriver string `mapstructure:"DB_DRIVER"`
+	Port      string `mapstructure:"SERVER_PORT"`
+	DBSource  string `mapstructure:"DB_SOURCE"`
+	DBDriver  string `mapstructure:"DB_DRIVER"`
+	JWTSecret string `mapstructure:"JWT_SECRET"`
 }
 
+// LoadConfig takes relative route to app.env from a file and returns env variables stored in it
 func LoadConfig(path string) (config Config, err error) {
 	viper.AddConfigPath(path)
 	viper.SetConfigName("app")
