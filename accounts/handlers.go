@@ -12,7 +12,10 @@ import (
 	"github.com/google/uuid"
 )
 
-// create a account
+// @Summary Create an account and return its account id
+// @Param   request body     accounts.createAccountRequest true "query params"
+// @Success 201     {object} util.ResponseParams
+// @Router  /v1/account/create [post]
 func createAccount(c *gin.Context) {
 	var req createAccountRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -39,6 +42,10 @@ func createAccount(c *gin.Context) {
 	c.JSON(http.StatusCreated, payload)
 }
 
+// @Summary Fetch an account data using its account id and user's id and return it
+// @Param   request query    accounts.readOneAccountRequest true "query params"
+// @Success 201     {object} util.ResponseParams
+// @Router  /v1/account/read [get]
 func readOneAccount(c *gin.Context) {
 	var req readOneAccountRequest
 	if err := c.ShouldBind(&req); err != nil {
@@ -63,6 +70,10 @@ func readOneAccount(c *gin.Context) {
 	c.JSON(http.StatusOK, payload)
 }
 
+// @Summary Fetch a set of accounts created by the user
+// @Param   request body     accounts.createAccountRequest true "query params"
+// @Success 201     {object} util.ResponseParams
+// @Router  /v1/account/create [post]
 func readManyAccounts(c *gin.Context) {
 	var req readManyAccountsRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -91,6 +102,10 @@ func readManyAccounts(c *gin.Context) {
 	c.JSON(http.StatusFound, payload)
 }
 
+// @Summary receives updated account details and update it in database using given account id and user id
+// @Param   request body     accounts.readManyAccountsRequest true "query params"
+// @Success 200     {object} util.ResponseParams
+// @Router  /v1/account/update [post]
 func updateAccount(c *gin.Context) {
 	var req updateAccountRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -119,6 +134,10 @@ func updateAccount(c *gin.Context) {
 	c.JSON(http.StatusOK, payload)
 }
 
+// @Summary deletes an account using account id
+// @Param   request query    accounts.deleteAccountRequest true "query params"
+// @Success 200     {object} util.ResponseParams
+// @Router  /v1/account/delete [delete]
 func deleteAccount(c *gin.Context) {
 	var req deleteAccountRequest
 	if err := c.ShouldBind(&req); err != nil {

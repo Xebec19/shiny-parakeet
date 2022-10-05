@@ -11,6 +11,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @title         assignment
+// @version       1.0
+// @description   This is a Go application having JWT authentication, Unit tests,etc using postgresql as database
+// @host          localhost:8080
+// @BasePath      /
+// @schemes       http
+// @contact.name  Rohan Kumar Thakur
+// @contact.email rohandeveloper106@gmail.com
+// @license.name  GNU GENERAL PUBLIC LICENSE
 func main() {
 	r := gin.Default()
 	config, err := util.LoadConfig(".")
@@ -21,10 +30,11 @@ func main() {
 	// Connect database
 	db.Connect()
 
-	// routes
+	// Routes
 	auth.Routes(r)
 	accounts.Routes(r)
 
 	port := fmt.Sprintf(":%s", config.Port)
+	// Start server
 	r.Run(port)
 }

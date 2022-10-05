@@ -27,11 +27,15 @@ make createdb
 ```
 make migrateup
 ```
-5. Test application
+5. Install dependencies
+```
+go mod tidy
+```
+6. Test application
 ```
 make test
 ```
-6. Run application
+7. Run application
 ```
 make server
 ```
@@ -41,11 +45,15 @@ make server
 ```
 make migrateup
 ```
-2. Test application
+2. Install dependencies
+```
+go mod tidy
+```
+3. Test application
 ```
 make test
 ```
-3. Run application
+4. Run application
 ```
 make server
 ```

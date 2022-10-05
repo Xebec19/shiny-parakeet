@@ -1,0 +1,163 @@
+basePath: /
+definitions:
+  accounts.createAccountRequest:
+    properties:
+      accountName:
+        type: string
+      address:
+        type: string
+      description:
+        type: string
+      dob:
+        type: string
+    required:
+    - accountName
+    - dob
+    type: object
+  accounts.readManyAccountsRequest:
+    properties:
+      limit:
+        type: string
+      page:
+        type: string
+    required:
+    - limit
+    - page
+    type: object
+  auth.loginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  auth.registerRequest:
+    properties:
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - firstName
+    - password
+    type: object
+  util.ResponseParams:
+    properties:
+      data: {}
+      status:
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: rohandeveloper106@gmail.com
+    name: Rohan Kumar Thakur
+  description: This is a Go application having JWT authentication, Unit tests,etc
+    using postgresql as database
+  license:
+    name: GNU GENERAL PUBLIC LICENSE
+  title: assignment
+  version: "1.0"
+paths:
+  /v1/account/create:
+    post:
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/accounts.createAccountRequest'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/util.ResponseParams'
+      summary: Fetch a set of accounts created by the user
+  /v1/account/delete:
+    delete:
+      parameters:
+      - in: query
+        name: accountId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/util.ResponseParams'
+      summary: deletes an account using account id
+  /v1/account/read:
+    get:
+      parameters:
+      - in: query
+        name: accountId
+        required: true
+        type: string
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/util.ResponseParams'
+      summary: Fetch an account data using its account id and user's id and return
+        it
+  /v1/account/update:
+    post:
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/accounts.readManyAccountsRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/util.ResponseParams'
+      summary: receives updated account details and update it in database using given
+        account id and user id
+  /v1/auth/login:
+    post:
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/auth.loginRequest'
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/util.ResponseParams'
+      summary: login takes email and password, and generates a jwt token if credentials
+        are correct
+  /v1/auth/register:
+    post:
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/auth.registerRequest'
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/util.ResponseParams'
+      summary: Register a new user
+schemes:
+- http
+swagger: "2.0"

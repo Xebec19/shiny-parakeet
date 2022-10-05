@@ -12,7 +12,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// register creates a new user in db and returns her user id
+// @Summary Register a new user
+// @Param   request body     auth.registerRequest true "query params"
+// @Success 202     {object} util.ResponseParams
+// @Router  /v1/auth/register [post]
 func register(c *gin.Context) {
 	var req registerRequest
 	if err := c.BindJSON(&req); err != nil {
@@ -42,7 +45,10 @@ func register(c *gin.Context) {
 	c.JSON(http.StatusAccepted, util.Response(payload))
 }
 
-// login takes email and password, and generates a jwt token if credentials are correct
+// @Summary login takes email and password, and generates a jwt token if credentials are correct
+// @Param   request body     auth.loginRequest true "query params"
+// @Success 202     {object} util.ResponseParams
+// @Router  /v1/auth/login [post]
 func login(c *gin.Context) {
 	var req loginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
