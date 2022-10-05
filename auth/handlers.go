@@ -2,9 +2,12 @@ package auth
 
 import (
 	"database/sql"
+	"log"
 	"net/http"
+	"time"
 
 	db "github.com/Xebec19/shiny-parakeet/db/sqlc"
+	"github.com/Xebec19/shiny-parakeet/token"
 	"github.com/Xebec19/shiny-parakeet/util"
 	"github.com/gin-gonic/gin"
 )
@@ -53,7 +56,17 @@ func login(c *gin.Context) {
 		return
 	}
 
-	token, err := util.GenerateJWT(user.UserID.String(), user.Email)
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("cannot load config:", err)
+	}
+	maker, err := token.NewJWTMaker(config.JWTSecret)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	token, err := maker.CreateToken(user.UserID.String(), time.Hour)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
