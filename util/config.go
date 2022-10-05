@@ -1,3 +1,6 @@
+/*
+utils contains functions for misl tasks
+*/
 package util
 
 import (

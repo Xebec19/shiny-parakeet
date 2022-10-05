@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Xebec19/shiny-parakeet/accounts"
 	"github.com/Xebec19/shiny-parakeet/auth"
 	"github.com/Xebec19/shiny-parakeet/util"
 	"github.com/gin-gonic/gin"
@@ -21,6 +22,7 @@ func main() {
 
 	// routes
 	auth.Routes(r)
+	accounts.Routes(r)
 
 	port := fmt.Sprintf(":%s", config.Port)
 	r.Run(port)

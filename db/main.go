@@ -1,3 +1,6 @@
+/*
+package db contains models and functions required to connect to database
+*/
 package db
 
 import (

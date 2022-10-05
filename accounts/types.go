@@ -8,3 +8,7 @@ type createAccountRequest struct {
 	Address     string    `json:"address"`
 	Description string    `json:"description"`
 }
+
+type readOneAccountRequest struct {
+	AccountId string `form:"accountId" binding:"required"`
+}
