@@ -51,4 +51,4 @@ make server
 ```
 
 # API Documentation 
-Please find API Documentation in ./wiki folder
+Please find API Documentation in [./wiki](https://github.com/Xebec19/shiny-parakeet/tree/main/wiki) folder
