@@ -1,0 +1,265 @@
+{
+	"info": {
+		"_postman_id": "7b7303e3-d26c-4535-a47b-dc4f9361e31d",
+		"name": "Admybrand Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22758120"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\":\"Rohan\",\n    \"lastName\":\"Thakur\",\n    \"email\":\"rohan@gmail.com\",\n    \"password\":\"password12\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"rohan@gmail.com\",\n    \"password\":\"password12\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateAccount",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5MTJmMmFkLTA0MjctNDhiNC05NDI5LTg5Yzg2MTI5MDE5ZSIsInVzZXJuYW1lIjoiZmVkYjY2NGEtNDQ3ZC0xMWVkLTlhOGUtMDI0MmFjMTEwMDAyIiwiaXNzdWVkX2F0IjoiMjAyMi0xMC0wNVQxMjo1MDo0NS44NjcyOTgzNzIrMDU6MzAiLCJleHBpcmVkX2F0IjoiMjAyMi0xMC0wNlQxMjo1MDo0NS44NjcyOTg0ODQrMDU6MzAifQ.CUGHGp4sts263TxZzvNhLVrcR6eOxxGXRcQS1TfE9mw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accountName\":\"Naruto\",\n    \"dob\":\"2022-07-27T14:16:00Z\",\n    \"address\":\"Konoha\",\n    \"description\":\"main lead of anime series\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/account/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"account",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReadAccount",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5MTJmMmFkLTA0MjctNDhiNC05NDI5LTg5Yzg2MTI5MDE5ZSIsInVzZXJuYW1lIjoiZmVkYjY2NGEtNDQ3ZC0xMWVkLTlhOGUtMDI0MmFjMTEwMDAyIiwiaXNzdWVkX2F0IjoiMjAyMi0xMC0wNVQxMjo1MDo0NS44NjcyOTgzNzIrMDU6MzAiLCJleHBpcmVkX2F0IjoiMjAyMi0xMC0wNlQxMjo1MDo0NS44NjcyOTg0ODQrMDU6MzAifQ.CUGHGp4sts263TxZzvNhLVrcR6eOxxGXRcQS1TfE9mw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/v1/account/read?accountId=796d090a-4482-11ed-aed4-0242ac110002",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"account",
+						"read"
+					],
+					"query": [
+						{
+							"key": "accountId",
+							"value": "796d090a-4482-11ed-aed4-0242ac110002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReadManyAccounts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5MTJmMmFkLTA0MjctNDhiNC05NDI5LTg5Yzg2MTI5MDE5ZSIsInVzZXJuYW1lIjoiZmVkYjY2NGEtNDQ3ZC0xMWVkLTlhOGUtMDI0MmFjMTEwMDAyIiwiaXNzdWVkX2F0IjoiMjAyMi0xMC0wNVQxMjo1MDo0NS44NjcyOTgzNzIrMDU6MzAiLCJleHBpcmVkX2F0IjoiMjAyMi0xMC0wNlQxMjo1MDo0NS44NjcyOTg0ODQrMDU6MzAifQ.CUGHGp4sts263TxZzvNhLVrcR6eOxxGXRcQS1TfE9mw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"page\":\"0\",\n    \"limit\":\"40\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/account/read",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"account",
+						"read"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAccount",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5MTJmMmFkLTA0MjctNDhiNC05NDI5LTg5Yzg2MTI5MDE5ZSIsInVzZXJuYW1lIjoiZmVkYjY2NGEtNDQ3ZC0xMWVkLTlhOGUtMDI0MmFjMTEwMDAyIiwiaXNzdWVkX2F0IjoiMjAyMi0xMC0wNVQxMjo1MDo0NS44NjcyOTgzNzIrMDU6MzAiLCJleHBpcmVkX2F0IjoiMjAyMi0xMC0wNlQxMjo1MDo0NS44NjcyOTg0ODQrMDU6MzAifQ.CUGHGp4sts263TxZzvNhLVrcR6eOxxGXRcQS1TfE9mw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"accountId\": \"796d090a-4482-11ed-aed4-0242ac110002\",\n        \"accountName\": \"Naruto Uzumaki\",\n        \"dob\": \"2022-07-27T00:00:00Z\",\n        \"address\":\"Konoha\",\n        \"description\": \"main lead of anime series\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/account/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"account",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAccount",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5MTJmMmFkLTA0MjctNDhiNC05NDI5LTg5Yzg2MTI5MDE5ZSIsInVzZXJuYW1lIjoiZmVkYjY2NGEtNDQ3ZC0xMWVkLTlhOGUtMDI0MmFjMTEwMDAyIiwiaXNzdWVkX2F0IjoiMjAyMi0xMC0wNVQxMjo1MDo0NS44NjcyOTgzNzIrMDU6MzAiLCJleHBpcmVkX2F0IjoiMjAyMi0xMC0wNlQxMjo1MDo0NS44NjcyOTg0ODQrMDU6MzAifQ.CUGHGp4sts263TxZzvNhLVrcR6eOxxGXRcQS1TfE9mw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/account/delete?accountId=796d090a-4482-11ed-aed4-0242ac110002",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"account",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "accountId",
+							"value": "796d090a-4482-11ed-aed4-0242ac110002"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
