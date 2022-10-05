@@ -58,5 +58,8 @@ make test
 make server
 ```
 
-# API Documentation 
+# API Documentation (POSTMAN)
 Please find API Documentation in [./wiki](https://github.com/Xebec19/shiny-parakeet/tree/main/wiki) folder
+
+# Swagger Documentation
+Please find documentation in [./docs](https://github.com/Xebec19/shiny-parakeet/tree/main/docs) folder
