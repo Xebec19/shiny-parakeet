@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"math/rand"
 	"strings"
 	"time"
@@ -12,6 +13,7 @@ func init() {
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
+// RandomString returns a random string of given length
 func RandomString(n int) string {
 	var sb strings.Builder
 	k := len(alphabet)
@@ -20,4 +22,9 @@ func RandomString(n int) string {
 		sb.WriteByte(c)
 	}
 	return sb.String()
+}
+
+// RandomEmail returns a random email in format xxx@email.com
+func RandomEmail() string {
+	return fmt.Sprintf("%s@email.com", RandomString(20))
 }

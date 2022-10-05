@@ -30,7 +30,7 @@ func register(c *gin.Context) {
 		Email:     req.Email,
 		Password:  hashPassword,
 	}
-	user, err := util.DBQuery.CreateUser(c, args)
+	user, err := db.DBQuery.CreateUser(c, args)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
@@ -50,7 +50,7 @@ func login(c *gin.Context) {
 		return
 	}
 
-	user, err := util.DBQuery.FindUser(c, req.Email)
+	user, err := db.DBQuery.FindUser(c, req.Email)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return

@@ -6,6 +6,7 @@ import (
 
 	"github.com/Xebec19/shiny-parakeet/accounts"
 	"github.com/Xebec19/shiny-parakeet/auth"
+	db "github.com/Xebec19/shiny-parakeet/db/sqlc"
 	"github.com/Xebec19/shiny-parakeet/util"
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +19,7 @@ func main() {
 	}
 
 	// Connect database
-	util.Connect()
+	db.Connect()
 
 	// routes
 	auth.Routes(r)

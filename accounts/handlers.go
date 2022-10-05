@@ -27,7 +27,7 @@ func createAccount(c *gin.Context) {
 		Description: sql.NullString{String: req.Description, Valid: true},
 		CreatedBy:   userId,
 	}
-	account, err := util.DBQuery.CreateAccount(c, args)
+	account, err := db.DBQuery.CreateAccount(c, args)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
@@ -51,7 +51,7 @@ func readOneAccount(c *gin.Context) {
 		AccountID: uuid.MustParse(req.AccountId),
 		CreatedBy: userId,
 	}
-	account, err := util.DBQuery.ReadAccount(c, args)
+	account, err := db.DBQuery.ReadAccount(c, args)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
@@ -79,7 +79,7 @@ func readManyAccounts(c *gin.Context) {
 		Offset:    int32(offset),
 		Limit:     int32(limit),
 	}
-	accounts, err := util.DBQuery.ReadAllAccount(c, args)
+	accounts, err := db.DBQuery.ReadAllAccount(c, args)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
@@ -107,7 +107,7 @@ func updateAccount(c *gin.Context) {
 		AccountID:   uuid.MustParse(req.AccountId),
 		CreatedBy:   userId,
 	}
-	account, err := util.DBQuery.UpdateAccount(c, args)
+	account, err := db.DBQuery.UpdateAccount(c, args)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
@@ -132,7 +132,7 @@ func deleteAccount(c *gin.Context) {
 		CreatedBy: userId,
 	}
 
-	util.DBQuery.DeleteAccount(c, args)
+	db.DBQuery.DeleteAccount(c, args)
 	payload := util.ResponseParams{
 		Status: true,
 		Data:   args.AccountID,
