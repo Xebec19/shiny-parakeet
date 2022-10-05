@@ -14,5 +14,6 @@ func Routes(r *gin.Engine) {
 	{
 		v1.POST("/create", createAccount)
 		v1.GET("/read", readOneAccount)
+		v1.POST("/read", readManyAccounts)
 	}
 }

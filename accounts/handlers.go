@@ -3,6 +3,7 @@ package accounts
 import (
 	"database/sql"
 	"net/http"
+	"strconv"
 	"time"
 
 	db "github.com/Xebec19/shiny-parakeet/db/sqlc"
@@ -58,6 +59,34 @@ func readOneAccount(c *gin.Context) {
 	payload := util.ResponseParams{
 		Status: true,
 		Data:   account,
+	}
+	c.JSON(http.StatusOK, payload)
+}
+
+func readManyAccounts(c *gin.Context) {
+	var req readManyAccountsRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	userId := uuid.MustParse(c.MustGet("userId").(string))
+	page, _ := strconv.ParseInt(req.Page, 10, 32)
+	limit, _ := strconv.ParseInt(req.Limit, 10, 32)
+	offset := page * limit
+	args := db.ReadAllAccountParams{
+		CreatedBy: userId,
+		Offset:    int32(offset),
+		Limit:     int32(limit),
+	}
+	accounts, err := util.DBQuery.ReadAllAccount(c, args)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+	payload := util.ResponseParams{
+		Status: true,
+		Data:   accounts,
 	}
 	c.JSON(http.StatusFound, payload)
 }

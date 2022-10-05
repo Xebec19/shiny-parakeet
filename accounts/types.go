@@ -12,3 +12,8 @@ type createAccountRequest struct {
 type readOneAccountRequest struct {
 	AccountId string `form:"accountId" binding:"required"`
 }
+
+type readManyAccountsRequest struct {
+	Page  string `json:"page" binding:"required"`
+	Limit string `json:"limit" binding:"required"`
+}
