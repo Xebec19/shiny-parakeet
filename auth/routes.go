@@ -1,3 +1,6 @@
+/*
+package auth contains routes and functions related to creating a user account in the application
+*/
 package auth
 
 import "github.com/gin-gonic/gin"

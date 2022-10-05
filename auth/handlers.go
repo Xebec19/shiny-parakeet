@@ -56,6 +56,14 @@ func login(c *gin.Context) {
 		return
 	}
 
+	// check password
+	err = util.CheckPassword(req.Password, user.Password)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	// assign token
 	config, err := util.LoadConfig(".")
 	if err != nil {
 		log.Fatal("cannot load config:", err)
@@ -66,7 +74,7 @@ func login(c *gin.Context) {
 		return
 	}
 
-	token, err := maker.CreateToken(user.UserID.String(), time.Hour)
+	token, err := maker.CreateToken(user.UserID.String(), 24*time.Hour)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
