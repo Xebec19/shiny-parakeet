@@ -90,3 +90,52 @@ func readManyAccounts(c *gin.Context) {
 	}
 	c.JSON(http.StatusFound, payload)
 }
+
+func updateAccount(c *gin.Context) {
+	var req updateAccountRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+	userId := uuid.MustParse(c.MustGet("userId").(string))
+
+	args := db.UpdateAccountParams{
+		AccountName: req.AccountName,
+		Dob:         time.Time(req.DOB),
+		Address:     sql.NullString{String: req.Address, Valid: true},
+		Description: sql.NullString{String: req.Description, Valid: true},
+		AccountID:   uuid.MustParse(req.AccountId),
+		CreatedBy:   userId,
+	}
+	account, err := util.DBQuery.UpdateAccount(c, args)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+	payload := util.ResponseParams{
+		Status: true,
+		Data:   account,
+	}
+	c.JSON(http.StatusOK, payload)
+}
+
+func deleteAccount(c *gin.Context) {
+	var req deleteAccountRequest
+	if err := c.ShouldBind(&req); err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	userId := uuid.MustParse(c.MustGet("userId").(string))
+	args := db.DeleteAccountParams{
+		AccountID: uuid.MustParse(req.AccountId),
+		CreatedBy: userId,
+	}
+
+	util.DBQuery.DeleteAccount(c, args)
+	payload := util.ResponseParams{
+		Status: true,
+		Data:   args.AccountID,
+	}
+	c.JSON(http.StatusOK, payload)
+}
