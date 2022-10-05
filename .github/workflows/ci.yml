@@ -49,8 +49,3 @@ jobs:
 
     - name: Build
       run: go build -v ./...
-
-    - name: Test
-      run: |
-      SERVER_PORT=8080 DB_SOURCE=postgresql://root:root@localhost:8081/assignment?sslmode=disable DB_DRIVER=postgres JWT_SECRET=ikBIMPoiDaJFZbnZEIskmgfDEnPBhhXGZnXvwpWQmyseUfXtBrUWArLNUKYb make test
- make test
