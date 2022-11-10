@@ -1,11 +1,11 @@
 postgres:
-	sudo docker run --name admybrand -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -p 8081:5432 -d postgres:12-alpine
+	docker run --name admybrand --network assignment-network -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -dp 8081:5432 postgres:12-alpine
 
 createdb:
-	sudo docker exec -it admybrand createdb --username=root --owner=root assignment
+	docker exec -it admybrand createdb --username=root --owner=root assignment
 
 dropdb:
-	sudo docker exec -it dropdb assignment
+	docker exec -it dropdb assignment
 
 migrateup:
 	migrate -path db/migration -database "postgresql://root:root@localhost:8081/assignment?sslmode=disable" -verbose up
