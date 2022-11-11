@@ -8,10 +8,10 @@ dropdb:
 	docker exec -it dropdb assignment
 
 migrateup:
-	migrate -path db/migration -database "postgresql://root:root@postgres:5432/assignment?sslmode=disable" -verbose up
+	migrate -path db/migration -database "postgresql://root:root@localhost:5432/assignment?sslmode=disable" -verbose up
 
 migratedown:
-	migrate -path db/migration -database "postgresql://root:root@postgres:5432/assignment?sslmode=disable" -verbose down
+	migrate -path db/migration -database "postgresql://root:root@localhost:5432/assignment?sslmode=disable" -verbose down
 
 server:
 	go run main.go
