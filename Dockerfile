@@ -1,6 +1,7 @@
 FROM golang:1.19.2-alpine3.16 as builder
 WORKDIR /app
 COPY . .
+RUN go mod tidy
 RUN go build -o main main.go
 
 # Run stage
